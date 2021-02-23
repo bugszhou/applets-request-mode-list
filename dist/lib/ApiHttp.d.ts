@@ -16,9 +16,7 @@ export default class ApiHttp {
     apis: any;
     appletsRequest: AppletsRequestInstance;
     constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig);
-    createApiItem(apiList: {
-        [key: string]: IApiItem;
-    } | IApiItem[]): void;
+    createApiItem(apiList: IApiItems): void;
     generateApiFn(fnNames: string[]): void;
     createRetryError(originalErr: any, options?: IAppletsRequestConfig): {
         errCode: string;

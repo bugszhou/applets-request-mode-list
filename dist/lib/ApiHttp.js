@@ -89,9 +89,10 @@ var ApiHttp = /** @class */ (function () {
             this.generateApiFn(fnNames);
             return;
         }
-        if (utils_1.isPlainObject(this.apiList)) {
-            var fnNames = Object.keys(this.apiList);
+        if (utils_1.isPlainObject(apiList)) {
+            var fnNames = Object.keys(apiList);
             this.generateApiFn(fnNames);
+            this.apiList = apiList;
         }
     };
     ApiHttp.prototype.generateApiFn = function (fnNames) {

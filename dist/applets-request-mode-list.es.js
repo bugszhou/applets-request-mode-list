@@ -401,9 +401,10 @@ var ApiHttp = /** @class */ (function () {
             this.generateApiFn(fnNames);
             return;
         }
-        if (isPlainObject$1(this.apiList)) {
-            var fnNames = Object.keys(this.apiList);
+        if (isPlainObject$1(apiList)) {
+            var fnNames = Object.keys(apiList);
             this.generateApiFn(fnNames);
+            this.apiList = apiList;
         }
     };
     ApiHttp.prototype.generateApiFn = function (fnNames) {
