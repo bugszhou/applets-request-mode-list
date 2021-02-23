@@ -2,7 +2,7 @@
 /// <reference path="./appletsRequestModeList.d.ts" />
 import "applets-request";
 
-declare class ApiHttp<IApis> {
+declare class ApiHttp<IApis = any> {
   constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig);
 
   baseURL: string;
@@ -13,6 +13,8 @@ declare class ApiHttp<IApis> {
    * Http Api 声明
    */
   apiList: IApiItems;
+
+  appletsRequest: AppletsRequestInstance;
 
   /**
    * 构建重试错误
@@ -55,3 +57,5 @@ declare class ApiHttp<IApis> {
    */
   transformConfig(executor: IAppletsRequest.IConfigTransformer): void;
 }
+
+export default ApiHttp;

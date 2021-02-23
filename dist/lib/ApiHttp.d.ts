@@ -1,14 +1,4 @@
-interface IApiHttpConfig {
-    appKey: string;
-    appCode: string;
-    baseURL: string;
-    apiList: {
-        [key: string]: IApiItem;
-    } | IApiItem[];
-}
 export default class ApiHttp {
-    appKey: string;
-    appCode: string;
     baseURL: string;
     apiList: {
         [key: string]: IApiItem;
@@ -28,4 +18,3 @@ export default class ApiHttp {
     createCancelToken(): IAppletsRequest.ICancelTokenInstance;
     transformConfig(executor: IAppletsRequest.IConfigTransformer): void;
 }
-export {};

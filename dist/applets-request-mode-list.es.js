@@ -1,5 +1,31 @@
 import appletsRequest, { getDefaults } from 'applets-request-weapp';
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 function getDataType(val) {
@@ -154,10 +180,8 @@ var ApiHttp = /** @class */ (function () {
     function ApiHttp(config, requestConfig) {
         this.apiList = {};
         this.apis = Object.create(null);
-        this.appKey = config.appKey;
-        this.appCode = config.appCode;
         this.baseURL = config.baseURL;
-        this.appletsRequest = appletsRequest.create(requestConfig || getDefaults());
+        this.appletsRequest = appletsRequest.create(__assign(__assign({}, (requestConfig || getDefaults())), { baseURL: this.baseURL }));
         this.createApiItem(config.apiList);
     }
     ApiHttp.prototype.createApiItem = function (apiList) {

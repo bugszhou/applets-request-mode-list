@@ -100,12 +100,10 @@ export default class ApiHttp {
   constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig) {
     this.apiList = {};
     this.apis = Object.create(null);
-    this.appKey = config.appKey;
-    this.appCode = config.appCode;
     this.baseURL = config.baseURL;
     this.appletsRequest = appletsRequest.create({
-      baseURL: this.baseURL,
       ...(requestConfig || getDefaults()),
+      baseURL: this.baseURL,
     });
     this.createApiItem(config.apiList);
   }
