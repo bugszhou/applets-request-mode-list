@@ -31,9 +31,9 @@ var ApiItem = /** @class */ (function () {
         var _this = this;
         Promise.resolve(options)
             .then(function (reqConfig) { return _this.appletsRequest(reqConfig); })
-            .then(function (res) { return resolve(res); })
-            .then(function () {
+            .then(function (res) {
             _this.hadRetry = 0;
+            resolve(res);
         })
             .catch(function (err) {
             if (_this.isRetryError(err) && _this.hadRetry < _this.retryTimes) {
@@ -68,21 +68,23 @@ var ApiItem = /** @class */ (function () {
 }());
 var ApiHttp = /** @class */ (function () {
     function ApiHttp(config, requestConfig) {
+        this.apiList = {};
         this.apis = Object.create(null);
-        this.apiList = config.apiList;
         this.appKey = config.appKey;
         this.appCode = config.appCode;
         this.baseURL = config.baseURL;
         this.appletsRequest = applets_request_weapp_1.default.create(requestConfig || applets_request_weapp_1.getDefaults());
-        this.createApiItem();
+        this.createApiItem(config.apiList);
     }
-    ApiHttp.prototype.createApiItem = function () {
-        if (utils_1.isArray(this.apiList)) {
+    ApiHttp.prototype.createApiItem = function (apiList) {
+        if (utils_1.isArray(apiList)) {
             var tmpApiList_1 = Object.create(null);
-            this.apiList.forEach(function (item) {
-                tmpApiList_1[item.fnName] = item;
+            apiList.forEach(function (item) {
+                if (item.fnName) {
+                    tmpApiList_1[item.fnName] = item;
+                }
             });
-            var fnNames = this.apiList.map(function (item) { return item.fnName; });
+            var fnNames = apiList.map(function (item) { return item.fnName; });
             this.apiList = tmpApiList_1;
             this.generateApiFn(fnNames);
             return;
@@ -129,4 +131,4 @@ var ApiHttp = /** @class */ (function () {
     return ApiHttp;
 }());
 exports.default = ApiHttp;
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=ApiHttp.js.map

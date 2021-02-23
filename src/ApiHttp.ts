@@ -34,22 +34,26 @@ class ApiItem<IData = any> {
     this.appletsRequest = request;
   }
 
-  getValidNumber(originalVal: number, val: number): number {
+  getValidNumber(originalVal: number, val: number | undefined): number {
     return !val && val !== 0 ? originalVal : val;
   }
 
-  http(options?: IAppletsRequestConfig): Promise<IData> {
+  http(options?: IAppletsRequestConfig): IAppletsRequestPromise<IData> {
     return new Promise((resolve, reject) => {
       this.request(options || {}, resolve, reject);
     });
   }
 
-  request(options: IAppletsRequestConfig, resolve, reject): void {
+  request(
+    options: IAppletsRequestConfig,
+    resolve: any,
+    reject: IAppletsRequest.IRejected
+  ): void {
     Promise.resolve(options)
       .then((reqConfig) => this.appletsRequest<IData>(reqConfig))
-      .then((res) => resolve(res))
-      .then(() => {
+      .then((res) => {
         this.hadRetry = 0;
+        resolve(res);
       })
       .catch((err) => {
         if (this.isRetryError(err) && this.hadRetry < this.retryTimes) {
@@ -94,38 +98,41 @@ interface IApiHttpConfig {
   apiList: { [key: string]: IApiItem } | IApiItem[];
 }
 
-export default class ApiHttp<IApis> {
+export default class ApiHttp {
   appKey: string;
 
   appCode: string;
 
   baseURL: string;
 
-  apiList: { [key: string]: IApiItem } | IApiItem[];
+  apiList: { [key: string]: IApiItem };
 
-  apis: IApis = Object.create(null);
+  apis: any;
 
   appletsRequest: AppletsRequestInstance;
 
   constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig) {
-    this.apiList = config.apiList;
+    this.apiList = {};
+    this.apis = Object.create(null);
     this.appKey = config.appKey;
     this.appCode = config.appCode;
     this.baseURL = config.baseURL;
     this.appletsRequest = appletsRequest.create(requestConfig || getDefaults());
-    this.createApiItem();
+    this.createApiItem(config.apiList);
   }
 
-  createApiItem(): void {
-    if (isArray(this.apiList)) {
+  createApiItem(apiList: { [key: string]: IApiItem } | IApiItem[]): void {
+    if (isArray(apiList)) {
       const tmpApiList: { [key: string]: IApiItem } = Object.create(null);
-      (this.apiList as IApiItem[]).forEach((item) => {
-        tmpApiList[item.fnName] = item;
+      (apiList as IApiItem[]).forEach((item) => {
+        if (item.fnName) {
+          tmpApiList[item.fnName] = item;
+        }
       });
-      const fnNames = (this.apiList as IApiItem[]).map((item) => item.fnName);
+      const fnNames = (apiList as IApiItem[]).map((item) => item.fnName);
 
       this.apiList = tmpApiList;
-      this.generateApiFn(fnNames);
+      this.generateApiFn(fnNames as string[]);
       return;
     }
 
@@ -155,9 +162,13 @@ export default class ApiHttp<IApis> {
   }
 
   createRetryError(
-    originalErr,
+    originalErr: any,
     options?: IAppletsRequestConfig
-  ): { errCode: string; originalErr: any; options: IAppletsRequestConfig } {
+  ): {
+    errCode: string;
+    originalErr: any;
+    options: IAppletsRequestConfig | undefined;
+  } {
     return {
       errCode: "RETRY_ERROR",
       originalErr,

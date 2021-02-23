@@ -9,7 +9,7 @@ import eslint from "@rollup/plugin-eslint";
 
 const pkg = require("./package.json");
 
-const libraryName = "appletsRequestWeapp";
+const libraryName = "ApiHttp";
 
 export default {
   input: `src/${libraryName}.ts`,
