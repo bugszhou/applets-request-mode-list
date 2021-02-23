@@ -88,21 +88,7 @@ class ApiItem<IData = any> {
   }
 }
 
-interface IApiHttpConfig {
-  appKey: string;
-
-  appCode: string;
-
-  baseURL: string;
-
-  apiList: { [key: string]: IApiItem } | IApiItem[];
-}
-
 export default class ApiHttp {
-  appKey: string;
-
-  appCode: string;
-
   baseURL: string;
 
   apiList: { [key: string]: IApiItem };
@@ -117,7 +103,10 @@ export default class ApiHttp {
     this.appKey = config.appKey;
     this.appCode = config.appCode;
     this.baseURL = config.baseURL;
-    this.appletsRequest = appletsRequest.create(requestConfig || getDefaults());
+    this.appletsRequest = appletsRequest.create({
+      baseURL: this.baseURL,
+      ...(requestConfig || getDefaults()),
+    });
     this.createApiItem(config.apiList);
   }
 

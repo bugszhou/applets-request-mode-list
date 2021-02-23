@@ -1,41 +1,57 @@
-interface IApiItem {
-  /**
-   * 服务端接口pathurl
-   */
-  apiUrl: string;
-  method: "POST" | "GET" | "PUT" | "post" | "get" | "put";
-  /**
-   * 每隔多少ms重试一次
-   */
-  interval?: number;
-  /**
-   * 重试次数
-   */
-  retryTimes?: number;
-  /**
-   * 接口描述
-   */
-  desc?: string;
-  /**
-   * 接口query请求参数的类型声明
-   */
-  paramsTyping?: string;
-  /**
-   * 接口body请求参数的类型声明
-   */
-  dataTyping?: string;
-  /**
-   * 接口返回值的类型声明
-   */
-  resTyping?: string;
-  /**
-   * 方法名称，Array时有效
-   */
-  fnName?: string;
-}
+/* eslint-disable @typescript-eslint/triple-slash-reference */
+/// <reference path="./appletsRequestModeList.d.ts" />
+import "applets-request";
 
-type IApiItems =
-  | {
-      [key: string]: IApiItem;
-    }
-  | IApiItem[];
+declare class ApiHttp<IApis> {
+  constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig);
+
+  baseURL: string;
+
+  apis: IApis;
+
+  /**
+   * Http Api 声明
+   */
+  apiList: IApiItems;
+
+  /**
+   * 构建重试错误
+   */
+  createRetryError(): {
+    errCode: string;
+    /**
+     * 原始错误对象
+     */
+    originalErr: any;
+    /**
+     * 需要合并到request中的数据
+     */
+    options: IAppletsRequestConfig | undefined;
+  };
+
+  /**
+   * 添加请求拦截器
+   */
+  addRequestInterceptor(
+    fulfilled: IAppletsRequest.IResolved<IAppletsRequestConfig>,
+    rejected?: IAppletsRequest.IRejected,
+  ): void;
+
+  /**
+   * 添加响应拦截器
+   */
+  addResponseInterceptor<IData>(
+    fulfilled: IAppletsRequest.IResolved<IAppletsRequestResponse<IData>>,
+    rejected?: IAppletsRequest.IRejected,
+  ): void;
+
+  /**
+   * 构建取消对象
+   */
+  createCancelToken(): IAppletsRequest.ICancelTokenInstance;
+
+  /**
+   * 请求Config转换器，可用于修改config中的数据
+   */
+  transformConfig(executor: IAppletsRequest.IConfigTransformer): void;
+}
