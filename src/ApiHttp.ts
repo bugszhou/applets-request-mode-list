@@ -121,7 +121,7 @@ export default class ApiHttp {
     this.createApiItem(config.apiList);
   }
 
-  createApiItem(apiList: { [key: string]: IApiItem } | IApiItem[]): void {
+  createApiItem(apiList: IApiItems): void {
     if (isArray(apiList)) {
       const tmpApiList: { [key: string]: IApiItem } = Object.create(null);
       (apiList as IApiItem[]).forEach((item) => {
@@ -136,10 +136,12 @@ export default class ApiHttp {
       return;
     }
 
-    if (isPlainObject(this.apiList)) {
-      const fnNames = Object.keys(this.apiList);
+    if (isPlainObject(apiList)) {
+      const fnNames = Object.keys(apiList);
 
       this.generateApiFn(fnNames);
+
+      this.apiList = apiList as { [key: string]: IApiItem };
     }
   }
 
