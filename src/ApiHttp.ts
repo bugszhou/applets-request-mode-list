@@ -137,11 +137,11 @@ export default class ApiHttp {
     }
 
     if (isPlainObject(apiList)) {
+      this.apiList = apiList as { [key: string]: IApiItem };
+
       const fnNames = Object.keys(apiList);
 
       this.generateApiFn(fnNames);
-
-      this.apiList = apiList as { [key: string]: IApiItem };
     }
   }
 

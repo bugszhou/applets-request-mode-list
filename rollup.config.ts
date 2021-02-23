@@ -26,7 +26,7 @@ export default {
     { file: pkg.module, format: "es", sourcemap: true },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ["applets-request"],
+  external: ["applets-request-weapp"],
   watch: {
     include: "src/**",
   },
