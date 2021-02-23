@@ -73,5 +73,8 @@
   },
   "dependencies": {
     "applets-request-weapp": "^1.0.5"
+  },
+  "peerDependencies": {
+    "applets-request": "^1.0.8"
   }
 }
