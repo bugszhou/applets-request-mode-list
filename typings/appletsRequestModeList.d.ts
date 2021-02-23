@@ -1,5 +1,3 @@
-
-
 interface IApiItem {
   /**
    * 服务端接口pathurl
@@ -35,3 +33,7 @@ interface IApiItem {
    */
   fnName?: string;
 }
+
+type IApiItems = {
+  [key: string]: IApiItem;
+} | IApiItem[];
