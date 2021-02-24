@@ -50,4 +50,8 @@ declare namespace IAppletsApi {
 
     apiList: IApiItems;
   }
+
+  interface IApis {
+    [key: string]: (...opts: any) => Promise<any>;
+  }
 }
