@@ -59,6 +59,12 @@ declare class ApiHttp<IApis = any> {
    * 请求Config转换器，可用于修改config中的数据
    */
   transformConfig(executor: IAppletsRequest.IConfigTransformer): void;
+
+  /**
+   * 新添加接口
+   * @param apiList 接口声明
+   */
+  addApiList(apiList: IAppletsApi.IApiItems): void;
 }
 
 export default ApiHttp;

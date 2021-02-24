@@ -158,6 +158,9 @@ export default class ApiHttp {
         interval: apiConfig.interval,
         retryTimes: apiConfig.retryTimes,
       };
+      if (typeof this.apis[fnName] === "function") {
+        throw new Error(`${fnName} already exists in apiList`);
+      }
       this.apis[fnName] = (options?: IAppletsRequestConfig) => {
         const apiItem = new ApiItem(apiInfo, this.appletsRequest);
         const opts = {
@@ -168,6 +171,10 @@ export default class ApiHttp {
       };
       this.apis[fnName] = assign(this.apis[fnName], apiInfo);
     });
+  }
+
+  addApiList(apiList: IAppletsApi.IApiItems): void {
+    this.createApiItem(apiList);
   }
 
   createRetryError(

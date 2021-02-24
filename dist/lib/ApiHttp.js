@@ -118,6 +118,9 @@ var ApiHttp = /** @class */ (function () {
                 interval: apiConfig.interval,
                 retryTimes: apiConfig.retryTimes,
             };
+            if (typeof _this.apis[fnName] === "function") {
+                throw new Error(fnName + " already exists in apiList");
+            }
             _this.apis[fnName] = function (options) {
                 var apiItem = new ApiItem(apiInfo, _this.appletsRequest);
                 var opts = __assign(__assign({}, (options || {})), { apiConfig: apiConfig });
@@ -125,6 +128,9 @@ var ApiHttp = /** @class */ (function () {
             };
             _this.apis[fnName] = utils_1.assign(_this.apis[fnName], apiInfo);
         });
+    };
+    ApiHttp.prototype.addApiList = function (apiList) {
+        this.createApiItem(apiList);
     };
     ApiHttp.prototype.createRetryError = function (originalErr, options) {
         return {

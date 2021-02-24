@@ -8,6 +8,7 @@ export default class ApiHttp {
     constructor(config: IAppletsApi.IApiHttpConfig, requestConfig?: IAppletsRequestConfig);
     createApiItem(apiList: IAppletsApi.IApiItems): void;
     generateApiFn(fnNames: string[]): void;
+    addApiList(apiList: IAppletsApi.IApiItems): void;
     createRetryError(originalErr: any, options?: IAppletsRequestConfig): {
         errCode: string;
         originalErr: any;
