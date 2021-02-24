@@ -19,7 +19,10 @@ declare class ApiHttp<IApis = any> {
   /**
    * 构建重试错误
    */
-  createRetryError(): {
+  createRetryError(
+    originalErr: any,
+    options?: IAppletsRequestConfig,
+  ): {
     errCode: string;
     /**
      * 原始错误对象
