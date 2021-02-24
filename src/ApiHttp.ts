@@ -135,18 +135,18 @@ export default class ApiHttp {
   generateApiFn(fnNames: string[]): void {
     fnNames.forEach((fnName) => {
       const apiConfig = this.apiList[fnName] as IApiItem;
-      const apiItem = new ApiItem(
-        {
-          baseURL: this.baseURL,
-          fnName,
-          url: apiConfig.apiUrl,
-          interval: apiConfig.interval,
-          retryTimes: apiConfig.retryTimes,
-        },
-        this.appletsRequest
-      );
-      this.apis[fnName] = apiItem.http.bind(apiItem);
-      this.apis[fnName] = assign(this.apis[fnName], apiItem);
+      const apiInfo = {
+        baseURL: this.baseURL,
+        fnName,
+        url: apiConfig.apiUrl,
+        interval: apiConfig.interval,
+        retryTimes: apiConfig.retryTimes,
+      };
+      this.apis[fnName] = (options?: IAppletsRequestConfig) => {
+        const apiItem = new ApiItem(apiInfo, this.appletsRequest);
+        return apiItem.http(options);
+      };
+      this.apis[fnName] = assign(this.apis[fnName], apiInfo);
     });
   }
 

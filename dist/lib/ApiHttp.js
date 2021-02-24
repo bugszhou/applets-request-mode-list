@@ -108,15 +108,18 @@ var ApiHttp = /** @class */ (function () {
         var _this = this;
         fnNames.forEach(function (fnName) {
             var apiConfig = _this.apiList[fnName];
-            var apiItem = new ApiItem({
+            var apiInfo = {
                 baseURL: _this.baseURL,
                 fnName: fnName,
                 url: apiConfig.apiUrl,
                 interval: apiConfig.interval,
                 retryTimes: apiConfig.retryTimes,
-            }, _this.appletsRequest);
-            _this.apis[fnName] = apiItem.http.bind(apiItem);
-            _this.apis[fnName] = utils_1.assign(_this.apis[fnName], apiItem);
+            };
+            _this.apis[fnName] = function (options) {
+                var apiItem = new ApiItem(apiInfo, _this.appletsRequest);
+                return apiItem.http(options);
+            };
+            _this.apis[fnName] = utils_1.assign(_this.apis[fnName], apiInfo);
         });
     };
     ApiHttp.prototype.createRetryError = function (originalErr, options) {
