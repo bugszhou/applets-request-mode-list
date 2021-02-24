@@ -2,7 +2,7 @@
 /// <reference path="./appletsRequestModeList.d.ts" />
 import "applets-request";
 
-declare class ApiHttp<IApis> {
+declare class ApiHttp<IApis = null> {
   constructor(
     config: IAppletsApi.IApiHttpConfig,
     requestConfig?: IAppletsRequestConfig,
@@ -10,7 +10,7 @@ declare class ApiHttp<IApis> {
 
   baseURL: string;
 
-  apis: IApis extends null | undefined | unknown ? IAppletsApi.IApis : IApis;
+  apis: IApis extends null | undefined ? IAppletsApi.IApis : IApis;
 
   /**
    * Http Api 声明
