@@ -21,10 +21,12 @@ var ApiItem = /** @class */ (function () {
         this.baseURL = "";
         this.url = "";
         this.fnName = "";
+        this.method = "GET";
         var retryTimes = config.retryTimes, interval = config.interval;
         this.baseURL = config.baseURL;
         this.url = config.url;
         this.fnName = config.fnName;
+        this.method = config.method || this.method;
         this.retryTimes = this.getValidNumber(this.retryTimes, retryTimes);
         this.interval = this.getValidNumber(this.interval, interval);
         this.appletsRequest = request;
@@ -35,7 +37,7 @@ var ApiItem = /** @class */ (function () {
     ApiItem.prototype.http = function (options) {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            _this.request(options || {}, resolve, reject);
+            _this.request(__assign(__assign({}, (options || {})), { url: _this.url, method: _this.method }), resolve, reject);
         });
     };
     ApiItem.prototype.request = function (options, resolve, reject) {
@@ -111,6 +113,7 @@ var ApiHttp = /** @class */ (function () {
             var apiInfo = {
                 baseURL: _this.baseURL,
                 fnName: fnName,
+                method: apiConfig.method,
                 url: apiConfig.apiUrl,
                 interval: apiConfig.interval,
                 retryTimes: apiConfig.retryTimes,

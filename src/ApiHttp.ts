@@ -5,6 +5,7 @@ interface IApiItemConfig {
   baseURL: string;
   url: string;
   fnName: string;
+  method?: IAppletsRequestConfig["method"];
   retryTimes?: number;
   interval?: number;
 }
@@ -22,6 +23,8 @@ class ApiItem<IData = any> {
 
   fnName = "";
 
+  method: IAppletsRequestConfig["method"] = "GET";
+
   appletsRequest: AppletsRequestInstance;
 
   constructor(config: IApiItemConfig, request: AppletsRequestInstance) {
@@ -29,6 +32,7 @@ class ApiItem<IData = any> {
     this.baseURL = config.baseURL;
     this.url = config.url;
     this.fnName = config.fnName;
+    this.method = config.method || this.method;
     this.retryTimes = this.getValidNumber(this.retryTimes, retryTimes);
     this.interval = this.getValidNumber(this.interval, interval);
     this.appletsRequest = request;
@@ -40,7 +44,11 @@ class ApiItem<IData = any> {
 
   http(options?: IAppletsRequestConfig): IAppletsRequestPromise<IData> {
     return new Promise((resolve, reject) => {
-      this.request(options || {}, resolve, reject);
+      this.request(
+        { ...(options || {}), url: this.url, method: this.method },
+        resolve,
+        reject
+      );
     });
   }
 
@@ -138,6 +146,7 @@ export default class ApiHttp {
       const apiInfo = {
         baseURL: this.baseURL,
         fnName,
+        method: apiConfig.method,
         url: apiConfig.apiUrl,
         interval: apiConfig.interval,
         retryTimes: apiConfig.retryTimes,
