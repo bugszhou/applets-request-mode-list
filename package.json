@@ -1,6 +1,6 @@
 {
   "name": "applets-request-mode-list",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "mini program axois request wechat weapp",
   "main": "dist/applets-request-mode-list.min.js",
   "module": "dist/applets-request-mode-list.es.js",
