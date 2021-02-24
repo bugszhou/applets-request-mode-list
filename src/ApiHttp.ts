@@ -99,13 +99,16 @@ class ApiItem<IData = any> {
 export default class ApiHttp {
   baseURL: string;
 
-  apiList: { [key: string]: IApiItem };
+  apiList: { [key: string]: IAppletsApi.IApiItem };
 
   apis: any;
 
   appletsRequest: AppletsRequestInstance;
 
-  constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig) {
+  constructor(
+    config: IAppletsApi.IApiHttpConfig,
+    requestConfig?: IAppletsRequestConfig
+  ) {
     this.apiList = {};
     this.apis = Object.create(null);
     this.baseURL = config.baseURL;
@@ -116,15 +119,19 @@ export default class ApiHttp {
     this.createApiItem(config.apiList);
   }
 
-  createApiItem(apiList: IApiItems): void {
+  createApiItem(apiList: IAppletsApi.IApiItems): void {
     if (isArray(apiList)) {
-      const tmpApiList: { [key: string]: IApiItem } = Object.create(null);
-      (apiList as IApiItem[]).forEach((item) => {
+      const tmpApiList: { [key: string]: IAppletsApi.IApiItem } = Object.create(
+        null
+      );
+      (apiList as IAppletsApi.IApiItem[]).forEach((item) => {
         if (item.fnName) {
           tmpApiList[item.fnName] = item;
         }
       });
-      const fnNames = (apiList as IApiItem[]).map((item) => item.fnName);
+      const fnNames = (apiList as IAppletsApi.IApiItem[]).map(
+        (item) => item.fnName
+      );
 
       this.apiList = tmpApiList;
       this.generateApiFn(fnNames as string[]);
@@ -132,7 +139,7 @@ export default class ApiHttp {
     }
 
     if (isPlainObject(apiList)) {
-      this.apiList = apiList as { [key: string]: IApiItem };
+      this.apiList = apiList as { [key: string]: IAppletsApi.IApiItem };
 
       const fnNames = Object.keys(apiList);
 
@@ -142,7 +149,7 @@ export default class ApiHttp {
 
   generateApiFn(fnNames: string[]): void {
     fnNames.forEach((fnName) => {
-      const apiConfig = this.apiList[fnName] as IApiItem;
+      const apiConfig = this.apiList[fnName] as IAppletsApi.IApiItem;
       const apiInfo = {
         baseURL: this.baseURL,
         fnName,
@@ -153,7 +160,11 @@ export default class ApiHttp {
       };
       this.apis[fnName] = (options?: IAppletsRequestConfig) => {
         const apiItem = new ApiItem(apiInfo, this.appletsRequest);
-        return apiItem.http(options);
+        const opts = {
+          ...(options || {}),
+          apiConfig,
+        };
+        return apiItem.http(opts);
       };
       this.apis[fnName] = assign(this.apis[fnName], apiInfo);
     });

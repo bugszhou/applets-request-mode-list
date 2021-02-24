@@ -3,7 +3,7 @@
 import "applets-request";
 
 declare class ApiHttp<IApis = any> {
-  constructor(config: IApiHttpConfig, requestConfig?: IAppletsRequestConfig);
+  constructor(config: IAppletsApi.IApiHttpConfig, requestConfig?: IAppletsRequestConfig);
 
   baseURL: string;
 
@@ -12,7 +12,7 @@ declare class ApiHttp<IApis = any> {
   /**
    * Http Api 声明
    */
-  apiList: IApiItems;
+  apiList: IAppletsApi.IApiItems;
 
   appletsRequest: AppletsRequestInstance;
 

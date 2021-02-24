@@ -120,7 +120,8 @@ var ApiHttp = /** @class */ (function () {
             };
             _this.apis[fnName] = function (options) {
                 var apiItem = new ApiItem(apiInfo, _this.appletsRequest);
-                return apiItem.http(options);
+                var opts = __assign(__assign({}, (options || {})), { apiConfig: apiConfig });
+                return apiItem.http(opts);
             };
             _this.apis[fnName] = utils_1.assign(_this.apis[fnName], apiInfo);
         });
