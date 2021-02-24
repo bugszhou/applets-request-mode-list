@@ -42,7 +42,7 @@ declare class ApiHttp<IApis = any> {
   /**
    * 添加响应拦截器
    */
-  addResponseInterceptor<IData>(
+  addResponseInterceptor<IData = any>(
     fulfilled: IAppletsRequest.IResolved<IAppletsRequestResponse<IData>>,
     rejected?: IAppletsRequest.IRejected,
   ): void;
