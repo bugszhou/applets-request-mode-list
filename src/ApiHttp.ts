@@ -110,7 +110,7 @@ export default class ApiHttp {
     this.apis = Object.create(null);
     this.baseURL = config.baseURL;
     this.appletsRequest = appletsRequest.create({
-      ...(requestConfig || getDefaults()),
+      ...merge(getDefaults(), requestConfig || {}),
       baseURL: this.baseURL,
     });
     this.createApiItem(config.apiList);

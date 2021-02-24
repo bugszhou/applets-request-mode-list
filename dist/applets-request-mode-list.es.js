@@ -183,7 +183,7 @@ var ApiHttp = /** @class */ (function () {
         this.apiList = {};
         this.apis = Object.create(null);
         this.baseURL = config.baseURL;
-        this.appletsRequest = appletsRequest.create(__assign(__assign({}, (requestConfig || getDefaults())), { baseURL: this.baseURL }));
+        this.appletsRequest = appletsRequest.create(__assign(__assign({}, (merge(getDefaults(), requestConfig || {}))), { baseURL: this.baseURL }));
         this.createApiItem(config.apiList);
     }
     ApiHttp.prototype.createApiItem = function (apiList) {
