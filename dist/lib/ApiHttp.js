@@ -84,7 +84,7 @@ var ApiHttp = /** @class */ (function () {
         this.apiList = {};
         this.apis = Object.create(null);
         this.baseURL = config.baseURL;
-        this.appletsRequest = applets_request_weapp_1.default.create(__assign(__assign({}, (utils_1.merge(applets_request_weapp_1.getDefaults(), requestConfig || {}))), { baseURL: this.baseURL }));
+        this.appletsRequest = applets_request_weapp_1.default.create(__assign(__assign({}, utils_1.merge(applets_request_weapp_1.getDefaults(), requestConfig || {})), { baseURL: this.baseURL }));
         this.createApiItem(config.apiList);
     }
     ApiHttp.prototype.createApiItem = function (apiList) {
