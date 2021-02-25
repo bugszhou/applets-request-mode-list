@@ -180,7 +180,7 @@ var ApiItem = /** @class */ (function () {
 }());
 var ApiHttp = /** @class */ (function () {
     function ApiHttp(config, requestConfig) {
-        this.apiList = {};
+        this.apiList = Object.create(null);
         this.apis = Object.create(null);
         this.baseURL = config.baseURL;
         this.appletsRequest = appletsRequest.create(__assign(__assign({}, merge(getDefaults(), requestConfig || {})), { baseURL: this.baseURL }));
@@ -195,12 +195,12 @@ var ApiHttp = /** @class */ (function () {
                 }
             });
             var fnNames = apiList.map(function (item) { return item.fnName; });
-            this.apiList = tmpApiList_1;
+            this.apiList = __assign(__assign({}, this.apiList), tmpApiList_1);
             this.generateApiFn(fnNames);
             return;
         }
         if (isPlainObject(apiList)) {
-            this.apiList = apiList;
+            this.apiList = __assign(__assign({}, this.apiList), apiList);
             var fnNames = Object.keys(apiList);
             this.generateApiFn(fnNames);
         }

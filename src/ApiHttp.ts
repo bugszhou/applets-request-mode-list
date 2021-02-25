@@ -109,7 +109,7 @@ export default class ApiHttp {
     config: IAppletsApi.IApiHttpConfig,
     requestConfig?: IAppletsRequestConfig
   ) {
-    this.apiList = {};
+    this.apiList = Object.create(null);
     this.apis = Object.create(null);
     this.baseURL = config.baseURL;
     this.appletsRequest = appletsRequest.create({
@@ -133,13 +133,15 @@ export default class ApiHttp {
         (item) => item.fnName
       );
 
-      this.apiList = tmpApiList;
+      this.apiList = { ...this.apiList, ...tmpApiList };
       this.generateApiFn(fnNames as string[]);
       return;
     }
 
     if (isPlainObject(apiList)) {
-      this.apiList = apiList as { [key: string]: IAppletsApi.IApiItem };
+      this.apiList = { ...this.apiList, ...apiList } as {
+        [key: string]: IAppletsApi.IApiItem;
+      };
 
       const fnNames = Object.keys(apiList);
 
