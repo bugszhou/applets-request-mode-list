@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var applets_request_weapp_1 = require("applets-request-weapp");
+var applets_request_all_1 = require("applets-request-all");
 var utils_1 = require("./helpers/utils");
 var ApiItem = /** @class */ (function () {
     function ApiItem(config, request) {
@@ -84,7 +84,7 @@ var ApiHttp = /** @class */ (function () {
         this.apiList = {};
         this.apis = Object.create(null);
         this.baseURL = config.baseURL;
-        this.appletsRequest = applets_request_weapp_1.default.create(__assign(__assign({}, utils_1.merge(applets_request_weapp_1.getDefaults(), requestConfig || {})), { baseURL: this.baseURL }));
+        this.appletsRequest = applets_request_all_1.default.create(__assign(__assign({}, utils_1.merge(applets_request_all_1.getDefaults(), requestConfig || {})), { baseURL: this.baseURL }));
         this.createApiItem(config.apiList);
     }
     ApiHttp.prototype.createApiItem = function (apiList) {

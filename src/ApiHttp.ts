@@ -1,4 +1,4 @@
-import appletsRequest, { getDefaults } from "applets-request-weapp";
+import appletsRequest, { getDefaults } from "applets-request-all";
 import { assign, isArray, isPlainObject, merge } from "./helpers/utils";
 
 interface IApiItemConfig {

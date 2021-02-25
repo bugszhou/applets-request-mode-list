@@ -1,4 +1,4 @@
-import appletsRequest, { getDefaults } from 'applets-request-weapp';
+import appletsRequest, { getDefaults } from 'applets-request-all';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
