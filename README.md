@@ -5,5 +5,3 @@
 ## Introduction
 
 声明式创建接口集合
-
-
