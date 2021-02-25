@@ -1,6 +1,6 @@
 {
   "name": "applets-request-mode-list",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "mini program axios request wechat weapp alipay",
   "main": "dist/applets-request-mode-list.min.js",
   "module": "dist/applets-request-mode-list.es.js",
