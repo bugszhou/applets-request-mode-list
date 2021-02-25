@@ -138,28 +138,26 @@ const apiList = {
 
 type: `class`
 
-### Methods And Properties
+## Methods And Properties
 
-#### `constructor(config, [appletsRequestConfig])`
+### `constructor(config, [appletsRequestConfig])`
 
 构造函数
 
-##### options
-
-###### `config`
+#### `config`
 
 Type: `Object` Required
 
 - `config.baseUrl` Type: `string`
 - `config.apiLIst` Type: `Object` 接口声明
 
-###### `appletsRequestConfig`
+#### `appletsRequestConfig`
 
 Type: `Object<IAppletsRequestConfig>` Optional
 
 - [点击查看`IAppletsRequestConfig`支持的配置](https://github.com/bugszhou/mini-request#readme)
 
-###### `constructor` Example
+#### `constructor` Example
 
 ```javascript
 const apiList = {
