@@ -155,7 +155,7 @@ Type: `Object` Required
 
 Type: `Object<IAppletsRequestConfig>` Optional
 
-- [点击查看`IAppletsRequestConfig`支持的配置](https://github.com/bugszhou/mini-request#readme)
+- [点击查看`IAppletsRequestConfig`支持的配置](https://github.com/bugszhou/applets-request-all#request-config)
 
 #### `constructor` Example
 
@@ -209,7 +209,7 @@ Return: `Promise`
 
 Type: `Object<IAppletsRequestConfig>` Optional
 
-- [点击查看`IAppletsRequestConfig`支持的配置](https://github.com/bugszhou/mini-request#readme)
+- [点击查看`IAppletsRequestConfig`支持的配置](https://github.com/bugszhou/applets-request-all#request-config)
 
 #### `apis` Example
 
