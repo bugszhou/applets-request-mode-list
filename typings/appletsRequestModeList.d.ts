@@ -20,11 +20,17 @@ declare namespace IAppletsApi {
     /**
      * 接口query请求参数的类型声明
      */
-    paramsTyping?: string;
+    paramsTyping?: {
+      required?: boolean;
+      type: string;
+    };
     /**
      * 接口body请求参数的类型声明
      */
-    dataTyping?: string;
+    dataTyping?: {
+      required?: boolean;
+      type: string;
+    };
     /**
      * 接口返回值的类型声明
      */
