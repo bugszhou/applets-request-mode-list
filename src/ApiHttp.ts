@@ -215,4 +215,11 @@ export default class ApiHttp {
   transformConfig(executor: IAppletsRequest.IConfigTransformer): void {
     this.appletsRequest.defaults.transformConfig = executor;
   }
+
+  isRetryError(err: any): boolean {
+    if (!err) {
+      return false;
+    }
+    return err.errCode === "RETRY_ERROR";
+  }
 }

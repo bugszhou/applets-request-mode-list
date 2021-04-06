@@ -68,6 +68,11 @@ declare class ApiHttp<IApis = null> {
    * @param apiList 接口声明
    */
   addApiList(apiList: IAppletsApi.IApiItems): void;
+
+  /**
+   * 是否是重试错误
+   */
+  isRetryError(err: any): boolean;
 }
 
 export default ApiHttp;
