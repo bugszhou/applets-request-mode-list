@@ -73,9 +73,9 @@
     ]
   },
   "dependencies": {
-    "applets-request-all": "^1.1.0"
+    "applets-request-all": "^1.1.1"
   },
   "peerDependencies": {
-    "applets-request-all": ">=1.1.0"
+    "applets-request-all": ">=1.1.1"
   }
 }
