@@ -18,4 +18,5 @@ export default class ApiHttp {
     addResponseInterceptor<T>(fulfilled: IAppletsRequest.IResolved<IAppletsRequestResponse<T>>, rejected?: IAppletsRequest.IRejected): void;
     createCancelToken(): IAppletsRequest.ICancelTokenInstance;
     transformConfig(executor: IAppletsRequest.IConfigTransformer): void;
+    isRetryError(err: any): boolean;
 }

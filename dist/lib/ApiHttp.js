@@ -151,6 +151,12 @@ var ApiHttp = /** @class */ (function () {
     ApiHttp.prototype.transformConfig = function (executor) {
         this.appletsRequest.defaults.transformConfig = executor;
     };
+    ApiHttp.prototype.isRetryError = function (err) {
+        if (!err) {
+            return false;
+        }
+        return err.errCode === "RETRY_ERROR";
+    };
     return ApiHttp;
 }());
 exports.default = ApiHttp;
