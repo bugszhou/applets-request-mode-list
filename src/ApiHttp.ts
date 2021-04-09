@@ -66,7 +66,7 @@ class ApiItem<IData = any> {
       .catch((err) => {
         if (this.isRetryError(err) && this.hadRetry < this.retryTimes) {
           this.hadRetry += 1;
-          const opts = merge(options, err.options || {});
+          const opts = merge(options, err.retryOptions || {});
           this.request(opts, resolve, reject);
           return;
         }
@@ -77,7 +77,11 @@ class ApiItem<IData = any> {
           }, this.interval);
           return;
         }
-        reject(this.isRetryError(err) ? err.originalErr : err);
+        if (this.isRetryError(err)) {
+          delete err.errCode;
+          delete err.retryOptions;
+        }
+        reject(err);
       });
   }
 
@@ -184,13 +188,13 @@ export default class ApiHttp {
     options?: IAppletsRequestConfig
   ): {
     errCode: string;
-    originalErr: any;
-    options: IAppletsRequestConfig | undefined;
+    retryOptions: IAppletsRequestConfig | undefined;
+    [key: string]: any;
   } {
     return {
       errCode: "RETRY_ERROR",
-      originalErr,
-      options,
+      retryOptions: options,
+      ...originalErr,
     };
   }
 
