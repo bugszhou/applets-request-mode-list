@@ -150,7 +150,7 @@ var ApiItem = /** @class */ (function () {
             .catch(function (err) {
             if (_this.isRetryError(err) && _this.hadRetry < _this.retryTimes) {
                 _this.hadRetry += 1;
-                var opts = merge(options, err.options || {});
+                var opts = merge(options, err.retryOptions || {});
                 _this.request(opts, resolve, reject);
                 return;
             }
@@ -161,7 +161,11 @@ var ApiItem = /** @class */ (function () {
                 }, _this.interval);
                 return;
             }
-            reject(_this.isRetryError(err) ? err.originalErr : err);
+            if (_this.isRetryError(err)) {
+                delete err.errCode;
+                delete err.retryOptions;
+            }
+            reject(err);
         });
     };
     ApiItem.prototype.isRetryError = function (err) {
@@ -232,11 +236,7 @@ var ApiHttp = /** @class */ (function () {
         this.createApiItem(apiList);
     };
     ApiHttp.prototype.createRetryError = function (originalErr, options) {
-        return {
-            errCode: "RETRY_ERROR",
-            originalErr: originalErr,
-            options: options,
-        };
+        return __assign({ errCode: "RETRY_ERROR", retryOptions: options }, originalErr);
     };
     ApiHttp.prototype.addRequestInterceptor = function (fulfilled, rejected) {
         this.appletsRequest.interceptors.request.use(fulfilled, rejected);

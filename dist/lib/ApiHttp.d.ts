@@ -11,8 +11,8 @@ export default class ApiHttp {
     addApiList(apiList: IAppletsApi.IApiItems): void;
     createRetryError(originalErr: any, options?: IAppletsRequestConfig): {
         errCode: string;
-        originalErr: any;
-        options: IAppletsRequestConfig | undefined;
+        retryOptions: IAppletsRequestConfig | undefined;
+        [key: string]: any;
     };
     addRequestInterceptor(fulfilled: IAppletsRequest.IResolved<IAppletsRequestConfig>, rejected?: IAppletsRequest.IRejected): void;
     addResponseInterceptor<T>(fulfilled: IAppletsRequest.IResolved<IAppletsRequestResponse<T>>, rejected?: IAppletsRequest.IRejected): void;
